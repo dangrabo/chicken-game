@@ -1,7 +1,6 @@
 import java.awt.Color;
 import java.awt.Graphics;
 import java.util.Random;
-
 import javax.swing.JPanel;
 
 /**
@@ -9,10 +8,6 @@ import javax.swing.JPanel;
  */
 public class Background extends JPanel{
 
-	public Background() {
-		
-	}
-	
 	/**
 	 * Draws the winning screen.
 	 * @param g	Graphics object for drawing.
@@ -22,7 +17,6 @@ public class Background extends JPanel{
 	 */
 	public static void paintComponent(Graphics g, int SCREEN_WIDTH, int SCREEN_HEIGHT, int UNIT_SIZE) {
 		Random rand = new Random();	// Creates random object.
-		
 		
 		// Draw setting
 		// Sky
@@ -70,6 +64,7 @@ public class Background extends JPanel{
 			g.setColor(Color.BLACK);
 			g.drawOval(dimX, dimY, 10, 10);
 		}
+		
 		// Rocks
 		Color ROCK = new Color(192, 192, 192);
 		for (int i = 0; i < 25; i++) {
@@ -136,6 +131,7 @@ public class Background extends JPanel{
 		g.fillRect(0, UNIT_SIZE * 5, SCREEN_WIDTH, UNIT_SIZE);
 		g.fillRect(0, UNIT_SIZE * 3, SCREEN_WIDTH, UNIT_SIZE);
 		g.fillRect(0, UNIT_SIZE, SCREEN_WIDTH, UNIT_SIZE);
+		
 		//Road lines
 		for (int i = 0; i < SCREEN_WIDTH / UNIT_SIZE; i++) {
 			g.setColor(Color.YELLOW);
@@ -152,10 +148,5 @@ public class Background extends JPanel{
 			g.drawLine(i * UNIT_SIZE, UNIT_SIZE + (UNIT_SIZE / 2), i * UNIT_SIZE + UNIT_SIZE, UNIT_SIZE + (UNIT_SIZE / 2));
 			i++;
 		}
-	
-		
-		
-	}
-	
-	
+	}	
 }

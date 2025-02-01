@@ -37,43 +37,34 @@ public class GamePanel extends JPanel implements ActionListener {
 
 	JButton endbutton = new JButton("Play Again");
 
-	
-	
 	/**
 	 * Constructs the game panel to display the game.
 	 */
 	public GamePanel(){
-		
 		random = new Random();
 		this.setPreferredSize(new Dimension(SCREEN_WIDTH, SCREEN_HEIGHT));
 		this.setBackground(new Color(248, 240, 164));
 		this.setFocusable(true);
 		this.addKeyListener(new MyKeyAdapter());
 		startGame();
-		
 	}
-	
 	
 	/**
 	 * Starts the game
 	 */
 	private void startGame() {
-		
 		running = true;
 		timer = new Timer(DELAY, this);
 		timer.start();
-		
 	}
 	
 	/**
 	 * Paints the components of the game
 	 */
 	public void paintComponent(Graphics g) {
-		
 		super.paintComponent(g);
 		drawSetting(g);
 		draw(g);
-		
 	}
 	
 	/**
@@ -125,24 +116,24 @@ public class GamePanel extends JPanel implements ActionListener {
 		}
 		else {
 			if (chickenY == 0) {
+				// Draw win screen
 				Background.paintComponent(g,SCREEN_WIDTH, SCREEN_HEIGHT, UNIT_SIZE);
 				g.setColor(Color.GREEN);
 				g.setFont(new Font("Ink Free", Font.BOLD, 75));
 				FontMetrics metrics = getFontMetrics(g.getFont());
 				g.drawString("WINNER!", (SCREEN_WIDTH - metrics.stringWidth("WINNER!"))/2, SCREEN_HEIGHT/2);
-
+				
+				// Set button
 				endbutton.setBounds(UNIT_SIZE * 4, UNIT_SIZE * 5, UNIT_SIZE * 3, UNIT_SIZE);
 				endbutton.setBackground(Color.GREEN);
 				endbutton.addActionListener(this);
 				this.add(endbutton);
 			}
-			else
+			else {
+				//Draw loss screen
 				gameOver(g);
-		}
-			
-		
-		
-		
+			}
+		}	
 	}
 	
 	/**
@@ -151,27 +142,28 @@ public class GamePanel extends JPanel implements ActionListener {
 	 * @param g	Graphics object for drawing.
 	 */
 	public void drawSetting(Graphics g) {
-		
 		//Draws Grid
 		// for(int i=0; i<SCREEN_WIDTH/UNIT_SIZE; i++)
 		// 	g.drawLine(i * UNIT_SIZE, 0, i * UNIT_SIZE, SCREEN_HEIGHT);
 		// for(int i=0; i<SCREEN_HEIGHT/UNIT_SIZE; i++)
 		// 	g.drawLine(0, i * UNIT_SIZE, SCREEN_WIDTH, i * UNIT_SIZE);
 		
-		
 		// Draw setting
 		// Water
 		g.setColor(Color.CYAN);
 		g.fillRect(0, 0, SCREEN_WIDTH, UNIT_SIZE);
+		
 		// Grass
 		g.setColor(Color.GREEN);
 		g.fillRect(0, 0, SCREEN_WIDTH, UNIT_SIZE);
 		g.fillRect(0, SCREEN_HEIGHT - UNIT_SIZE, SCREEN_WIDTH, SCREEN_HEIGHT);
+		
 		// Roads
 		g.setColor(Color.DARK_GRAY);
 		g.fillRect(0, UNIT_SIZE * 5, SCREEN_WIDTH, UNIT_SIZE);
 		g.fillRect(0, UNIT_SIZE * 3, SCREEN_WIDTH, UNIT_SIZE);
 		g.fillRect(0, UNIT_SIZE, SCREEN_WIDTH, UNIT_SIZE);
+		
 		//Road lines
 		for (int i = 0; i < SCREEN_WIDTH / UNIT_SIZE; i += 2) {
 			g.setColor(Color.YELLOW);
@@ -191,7 +183,7 @@ public class GamePanel extends JPanel implements ActionListener {
 	 * Stores the locations of the cars in an array.
 	 */
 	public void generateCars() {
-		
+		// Road one
 		roadOneX[0] = roadOneStart;
 		roadOneX[1] = roadOneStart + UNIT_SIZE * 3;
 		roadOneX[2] = roadOneStart + UNIT_SIZE * 6;
@@ -200,6 +192,7 @@ public class GamePanel extends JPanel implements ActionListener {
 		roadOneX[5] = roadOneStart + UNIT_SIZE * -6;
 		roadOneX[6] = roadOneStart + UNIT_SIZE * -9;
 		
+		// Road two
 		roadTwoX[0] = roadTwoStart;
 		roadTwoX[1] = roadTwoStart + UNIT_SIZE * 3;
 		roadTwoX[2] = roadTwoStart + UNIT_SIZE * 6;
@@ -207,12 +200,11 @@ public class GamePanel extends JPanel implements ActionListener {
 		roadTwoX[4] = roadTwoStart + UNIT_SIZE * 15;
 		roadTwoX[5] = roadTwoStart + UNIT_SIZE * 18;
 		
+		// Road three
 		roadThreeX[0] = roadOneStart;
 		roadThreeX[1] = roadOneStart + UNIT_SIZE * 6;
 		roadThreeX[2] = roadOneStart + UNIT_SIZE * -3;
 		roadThreeX[3] = roadOneStart + UNIT_SIZE * -9;
-		
-		
 	}
 	
 	/**
@@ -235,14 +227,12 @@ public class GamePanel extends JPanel implements ActionListener {
 		for (int i = 0; i < 6; i++) {
 			roadTwoX[i] += UNIT_SIZE;
 		}
-		
 	}
 	
 	/**
 	 * Reads player's directional input and moves player accordingly.
 	 */
 	public void move() {
-		
 		switch(direction) {
 		case 'U':
 			chickenY -= UNIT_SIZE;
@@ -256,16 +246,13 @@ public class GamePanel extends JPanel implements ActionListener {
 		case 'R':
 			chickenX += UNIT_SIZE;
 			break;
-
 		}
-		
 	}
 	
 	/**
 	 * Checks the players position against all values in the cars array to see if the player has collided with any cars.
 	 */
 	public void checkCollisions() {
-		
 		// Check for collisions in first road
 		for (int i = 0; i < 7; i++) {
 			if (chickenX == roadOneX[i] && chickenY == UNIT_SIZE)
@@ -287,7 +274,6 @@ public class GamePanel extends JPanel implements ActionListener {
 		// Check for win
 		if (chickenY == 0)
 			running = false;
-		
 	}
 	
 	/**
@@ -300,14 +286,12 @@ public class GamePanel extends JPanel implements ActionListener {
 		g.setFont(new Font("Ink Free", Font.BOLD, 75));
 		FontMetrics metrics = getFontMetrics(g.getFont());
 		g.drawString("Game Over", (SCREEN_WIDTH - metrics.stringWidth("Game Over"))/2, SCREEN_HEIGHT/2);
-
+		
 		// Draw restart button
 		endbutton.setBounds(UNIT_SIZE * 4, UNIT_SIZE * 5, UNIT_SIZE * 3, UNIT_SIZE);
 		endbutton.setBackground(Color.RED);
 		endbutton.addActionListener(this);
 		this.add(endbutton);
-
-
 	}
 	
 	/**
@@ -315,7 +299,6 @@ public class GamePanel extends JPanel implements ActionListener {
 	 */
 	@Override
 	public void actionPerformed(ActionEvent e) {
-		
 		if(running) {
 			checkCollisions();
 			moveCars();
@@ -323,11 +306,12 @@ public class GamePanel extends JPanel implements ActionListener {
 			move();
 			checkCollisions();
 			repaint();	// Updates the running state of the game.
-			
 		}
 		
-		direction = 'N';	// Resets players movement value to return player to a static position.
-
+		// Reset players movement value to return player to a static position.
+		direction = 'N';	
+		
+		// Create new game if button is pressed
 		if (e.getSource() == endbutton) {
 			// Get the top-level window that contains this panel.
 			JFrame currentFrame = (JFrame) SwingUtilities.getWindowAncestor(this);
@@ -362,11 +346,6 @@ public class GamePanel extends JPanel implements ActionListener {
 					direction = 'U';
 				break;
 			}
-			
-			
-			
-		}
-		
+		}	
 	}
-
 }
