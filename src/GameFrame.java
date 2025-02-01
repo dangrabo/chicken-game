@@ -4,7 +4,7 @@ import javax.swing.JFrame;
  * This class contains the constructor to display the JFrame that the game runs on.
  */
 public class GameFrame extends JFrame {
-	
+
 	/**
 	 * Constructs a new GameFrame object that adds a new GamePanel object.
 	 */
